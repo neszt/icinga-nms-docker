@@ -1,0 +1,26 @@
+*** Database ***
+
+step     = 90
+pings    = 20
+
+# consfn mrhb steps total
+
+AVERAGE  0.5     1 1024
+AVERAGE  0.5    10 1024
+    MIN  0.5    10 1024
+    MAX  0.5    10 1024
+AVERAGE  0.5    80 1024
+    MAX  0.5    80 1024
+    MIN  0.5    80 1024
+AVERAGE  0.5   960 1024
+    MAX  0.5   960 1024
+    MIN  0.5   960 1024
+AVERAGE  0.5  3200 1024
+    MAX  0.5  3200 1024
+    MIN  0.5  3200 1024
+AVERAGE  0.5  3200 1024
+    MAX  0.5  3200 1024
+    MIN  0.5  3200 1024
+AVERAGE  0.5 96000 1024
+    MAX  0.5 96000 1024
+    MIN  0.5 96000 1024

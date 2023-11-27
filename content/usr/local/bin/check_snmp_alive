@@ -1,0 +1,10 @@
+#!/bin/sh
+
+OID_SYSUPTIME=".1.3.6.1.2.1.1.3.0"
+
+/usr/lib/nagios/plugins/check_snmp -H "$1" -C "$2" -o $OID_SYSUPTIME 2>&1
+RV=$?
+if [ $RV -ne 0 ]; then
+	RV=2
+fi
+exit $RV

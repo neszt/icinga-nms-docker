@@ -1,0 +1,32 @@
+server {
+	listen 8081;
+	listen [::]:8081;
+
+	location / {
+		return 302 /icinga;
+	}
+
+	location /icinga {
+		alias /usr/share/icinga/htdocs;
+		index index.html;
+		auth_basic "Icinga Access";
+		auth_basic_user_file /config/htpasswd.users;
+	}
+
+	location /icinga/stylesheets {
+		alias /etc/icinga/stylesheets;
+		auth_basic "Icinga Access";
+		auth_basic_user_file /config/htpasswd.users;
+	}
+
+	location /cgi-bin/icinga/ {
+		root /usr/lib/cgi-bin/icinga;
+		rewrite ^/cgi-bin/icinga/(.*)\.cgi /$1.cgi break;
+		include /etc/nginx/fastcgi_params;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		auth_basic "Icinga Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+}

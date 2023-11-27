@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "nag.dtd">
+<config>
+  <git commit_message="" do_commit="0" help="To store this xml config and all other config to git, write commit message and set do_commit to 1"/>
+  <company id="Own"/>
+  <person id="admin" alert="yes" epager="+36..."/>
+  <person id="mattermost" name="Mattermost" alert="yes" epager=""/>
+  <alertgroup id="a_main" name="Main alerts" persons="mattermost admin"/>
+  <alertgroup id="a_icingaadmin" name="Icingaadmin alerts" persons="admin"/>
+  <hostgroup id="h_core" name="Core hosts" alerts="a_main"/>
+  <type id="PC"/>
+  <type id="Mikrotik"/>
+  <type id="DOCKER"/>
+  <hosttemplate id="commonServer">
+    <service name="ssh" command="check_ssh" desc="ssh service" warnings="yes" active="yes" unknown="no"/>
+    <service name="ntp" command="check_ntp_nrpe" warnings="no" active="yes" unknown="no"/>
+    <service name="munin" command="check_munin" warnings="yes" check_period="workhours" active="yes" unknown="no"/>
+  </hosttemplate>
+  <hosttemplate id="dockerWeb">
+    <service name="https" command="check_https" desc="web ssl service" warnings="yes" active="yes" unknown="no"/>
+    <service name="cert" command="check_ssl_cert" warnings="yes" check_period="workhours" active="yes" unknown="no"/>
+  </hosttemplate>
+  <host id="localhost" ip="127.0.0.1" company="Own" hostgroup="h_core" type="PC" ignore="no" pingservice="disabled" template="commonServer" check_period="24x7">
+  </host>
+</config><!-- config, -->

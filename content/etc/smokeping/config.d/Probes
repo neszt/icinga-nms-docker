@@ -1,0 +1,78 @@
+*** Probes ***
+
++ FPing
+
+binary = /usr/bin/fping
+pings = 10
+step = 60
+
+++ FPing
+
+++ FPing2
+
+++ FPing3
+
+++ FPing4
+
++ DNS
+binary = /usr/bin/dig
+lookup = google.com
+pings = 5
+step = 60
+
++ EchoPingHttp
+
+binary = /usr/bin/echoping
+
+++ EchoPingHttp
+forks = 5
+offset = 50%
+step = 300
+# The following variables can be overridden in each target section
+accept_redirects = yes
+# extraopts = -some-letter-the-author-did-not-think-of
+ignore_cache = yes
+ipversion = 4
+pings = 5
+port = 80
+priority = 6
+revalidate_data = no
+timeout = 20
+tos = 0xa0
+url = /
+waittime = 1
+
+++ EchoPingHttpAcme
+binary = /usr/bin/echoping
+pings = 5
+url = /.well-known/acme-challenge/nagios.html
+
++ EchoPingHttps
+binary = /usr/bin/echoping
+pings = 5
+url = /
+
++SSH
+binary = /usr/bin/ssh-keyscan
+forks = 5
+offset = 50%
+step = 60
+timeout = 15
+keytype = rsa
+pings = 5
+port = 22
+
++EchoPingSmtp
+binary = /usr/bin/echoping
+forks = 5
+offset = 50%
+step = 60
+
++OpenSSHMikrotikPing
+# packetsize = [e.g. usual MTU is 1500]
+mikrotikuser = nagios
+mikrotikpass =
+forks = 5
+offset = 50%
+timeout = 15
+step = 60

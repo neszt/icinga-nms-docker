@@ -1,0 +1,40 @@
+server {
+	listen 8083;
+	listen [::]:8083;
+
+	location / {
+		return 302 /munin;
+	}
+
+	location ^~ /munin-cgi/munin-cgi-graph/ {
+		fastcgi_split_path_info ^(/munin-cgi/munin-cgi-graph)(.*);
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/munin/cgi/munin-cgi-graph;
+		include fastcgi_params;
+		auth_basic "Munin Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location /munin/static/ {
+		alias /etc/munin/static/;
+		auth_basic "Munin Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location /munin/ {
+		fastcgi_split_path_info ^(/munin)(.*);
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/munin/cgi/munin-cgi-html;
+		include fastcgi_params;
+		auth_basic "Munin Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+}

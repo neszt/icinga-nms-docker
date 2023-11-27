@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT config (git|company|person|alertgroup|hostgroup|hosttemplate|type|host)+>
+
+<!ELEMENT git EMPTY>
+<!ATTLIST git
+        commit_message CDATA #REQUIRED
+        do_commit (0|1) "0"
+        help CDATA #REQUIRED
+>
+
+<!ELEMENT company EMPTY>
+<!ATTLIST company
+        id ID #REQUIRED
+>
+
+<!ELEMENT person EMPTY>
+<!ATTLIST person
+        id ID #REQUIRED
+        name CDATA #IMPLIED
+        email CDATA #IMPLIED
+        alert (yes|no) "no"
+        epager CDATA #IMPLIED
+>
+
+<!ELEMENT alertgroup EMPTY>
+<!ATTLIST alertgroup
+        id ID #REQUIRED
+        name CDATA #IMPLIED
+        persons IDREFS #REQUIRED
+>
+
+<!ELEMENT hostgroup EMPTY>
+<!ATTLIST hostgroup
+        id ID #REQUIRED
+        name CDATA #IMPLIED
+        alerts IDREFS #REQUIRED
+>
+
+<!ELEMENT type EMPTY>
+<!ATTLIST type
+        id ID #REQUIRED
+>
+
+<!ELEMENT hosttemplate (service*)>
+<!ATTLIST hosttemplate
+        id ID #REQUIRED
+>
+
+<!ELEMENT host (service|http-service|interface|host)*>
+<!ATTLIST host
+        ip CDATA #IMPLIED
+        hostgroup IDREFS #IMPLIED
+        template IDREFS #IMPLIED
+        id CDATA #REQUIRED
+        retries CDATA #IMPLIED
+        company IDREFS #IMPLIED
+        type IDREFS #IMPLIED
+        ignore (no|yes) "no"
+        longitude CDATA #IMPLIED
+        lattitude CDATA #IMPLIED
+        pingservice (enabled|disabled) "disabled"
+        user CDATA #IMPLIED
+        pass CDATA #IMPLIED
+        ena CDATA #IMPLIED
+        snmppass CDATA #IMPLIED
+        check_period CDATA #IMPLIED
+        active CDATA #IMPLIED
+>
+
+<!ELEMENT interface (address*)>
+<!ATTLIST interface
+        name CDATA #REQUIRED
+        comment CDATA #IMPLIED
+>
+
+<!ELEMENT address EMPTY>
+<!ATTLIST address
+        ip CDATA #REQUIRED
+        comment CDATA #IMPLIED
+>
+
+<!ELEMENT service EMPTY>
+<!ATTLIST service
+        name CDATA #REQUIRED
+        command CDATA "nop"
+        desc CDATA #IMPLIED
+        warnings (no|yes) "no"
+        unknown (no|yes) "no"
+        active (no|yes) "yes"
+        check_interval CDATA #IMPLIED
+        check_period CDATA #IMPLIED
+>
+
+<!ELEMENT http-service EMPTY>
+<!ATTLIST http-service
+        company CDATA #IMPLIED
+        domain CDATA #IMPLIED
+        uri CDATA #IMPLIED
+        http-port CDATA #IMPLIED
+        https-port CDATA #IMPLIED
+>

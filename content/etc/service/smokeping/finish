@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ps faux | grep usr.sbin.smokeping | awk '{print $2}' | xargs kill
