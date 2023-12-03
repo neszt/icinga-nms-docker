@@ -45,5 +45,5 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            neszt/icinga-nms-docker:$GITHUB_REF_NAME
-            ghcr.io/neszt/icinga-nms-docker:$GITHUB_REF_NAME
+            neszt/icinga-nms-docker:${{ github.ref_name }}
+            ghcr.io/neszt/icinga-nms-docker:${{ github.ref_name }}
