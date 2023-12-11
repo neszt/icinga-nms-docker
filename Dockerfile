@@ -5,15 +5,17 @@ MAINTAINER Neszt Tibor <tibor@neszt.hu>
 ENV CHECK_SSL_CERT_VERSION=e969f486be576ee899ff0326dc44402b8fbf3f3a
 ENV CHECK_RBL_VERSION=0262c7104267c8555e80dea8e2d1347df0c7a485
 ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
+ENV CHECK_IPMI_SENSOR_VERSION=v3.14
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	# buster needed for older icinga
 	echo deb http://deb.debian.org/debian buster main >> /etc/apt/sources.list && \
 	apt-get update && apt-get -y upgrade && \
-	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap php-fpm make xalan xsltproc libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libmonitoring-plugin-perl libcpanel-json-xs-perl python-is-python2 bc nagios-plugins-contrib && \
+	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap php-fpm make xalan xsltproc libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libmonitoring-plugin-perl libcpanel-json-xs-perl python-is-python2 bc freeipmi-tools nagios-plugins-contrib && \
 	# nagios-plugins-contrib upgrades
 	curl https://raw.githubusercontent.com/matteocorti/check_ssl_cert/${CHECK_SSL_CERT_VERSION}/check_ssl_cert > /usr/lib/nagios/plugins/check_ssl_cert && \
 	curl https://raw.githubusercontent.com/matteocorti/check_rbl/${CHECK_RBL_VERSION}/check_rbl | sed '1 s/^.*$/#!\/usr\/bin\/perl/' > /usr/lib/nagios/plugins/check_rbl && \
+	curl https://raw.githubusercontent.com/thomas-krenn/check_ipmi_sensor_v3/${CHECK_IPMI_SENSOR_VERSION}/check_ipmi_sensor > /usr/lib/nagios/plugins/check_ipmi_sensor && \
 	# outer check scripts
 	curl https://raw.githubusercontent.com/neszt/check-librenms-alerts/${CHECK_LIBRENMS_ALERTS_VERSION}/check_librenms_alerts.pl > /usr/local/bin/check_librenms_alerts.pl && chmod +x /usr/local/bin/check_librenms_alerts.pl && \
 	# conf php-fpm to not clear env variables
