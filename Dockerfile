@@ -10,10 +10,11 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	# buster needed for older icinga
 	echo deb http://deb.debian.org/debian buster main >> /etc/apt/sources.list && \
 	apt-get update && apt-get -y upgrade && \
-	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap php-fpm make xalan xsltproc libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libmonitoring-plugin-perl libcpanel-json-xs-perl python-is-python2 bc && \
+	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap php-fpm make xalan xsltproc libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libmonitoring-plugin-perl libcpanel-json-xs-perl python-is-python2 bc nagios-plugins-contrib && \
+	# nagios-plugins-contrib upgrades
+	curl https://raw.githubusercontent.com/matteocorti/check_ssl_cert/${CHECK_SSL_CERT_VERSION}/check_ssl_cert > /usr/lib/nagios/plugins/check_ssl_cert && \
+	curl https://raw.githubusercontent.com/matteocorti/check_rbl/${CHECK_RBL_VERSION}/check_rbl | sed '1 s/^.*$/#!\/usr\/bin\/perl/' > /usr/lib/nagios/plugins/check_rbl && \
 	# outer check scripts
-	curl https://raw.githubusercontent.com/matteocorti/check_ssl_cert/${CHECK_SSL_CERT_VERSION}/check_ssl_cert > /usr/local/bin/check_ssl_cert && chmod +x /usr/local/bin/check_ssl_cert && \
-	curl https://raw.githubusercontent.com/matteocorti/check_rbl/${CHECK_RBL_VERSION}/check_rbl | sed '1 s/^.*$/#!\/usr\/bin\/perl/' > /usr/local/bin/check_rbl && chmod +x /usr/local/bin/check_rbl && \
 	curl https://raw.githubusercontent.com/neszt/check-librenms-alerts/${CHECK_LIBRENMS_ALERTS_VERSION}/check_librenms_alerts.pl > /usr/local/bin/check_librenms_alerts.pl && chmod +x /usr/local/bin/check_librenms_alerts.pl && \
 	# conf php-fpm to not clear env variables
 	sed -i '/clear_env/s/^;//' /etc/php/7.4/fpm/pool.d/www.conf && \
