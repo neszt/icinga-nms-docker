@@ -1,5 +1,4 @@
 # Icinga NMS
-============
 
 This is Icinga dockerized with smokeping and munin. All configuration is controlled by a single (nag.xml) file.
 
@@ -14,7 +13,7 @@ This is Icinga dockerized with smokeping and munin. All configuration is control
 
 ## INSTALL
 ```bash
-git clone https://github.com/neszt/icinga-nms.git
+git clone https://github.com/neszt/icinga-nms-docker.git
 ```
 
 ### docker-compose
@@ -74,8 +73,6 @@ htpasswd -D htpasswd.users [username]
 ### Example using custom config
 
 ## Third party software
-* [Icinga Chech SSL Cert](https://github.com/matteocorti/check_ssl_cert)
-* [Icinga plugin to check if an SMTP server is blacklisted](https://github.com/matteocorti/check_rbl)
 * [Ace syntax highlight](https://github.com/ajaxorg/ace)
 
 ## FAQ
