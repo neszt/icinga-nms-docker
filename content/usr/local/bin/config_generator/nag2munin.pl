@@ -37,6 +37,7 @@ sub dir_dirs_to_hash {#{{{
 
 sub get_hosts_munininfo {#{{{
 	my $hosts = shift;
+	my $hosttemplates = shift;
 
 	my @res;
 	foreach my $host ( sort keys %{$hosts} ) {
@@ -47,9 +48,14 @@ sub get_hosts_munininfo {#{{{
 		if ( defined $hosts->{$host}->{service} && defined $hosts->{$host}->{service}->{munin} ) {
 			$data->{munin} = 1;
 		}
+		if ( my $hosttemplate = $hosts->{$host}->{template} ) {
+			if ( defined $hosttemplates->{$hosttemplate} && defined $hosttemplates->{$hosttemplate}->{service}->{munin} ) {
+				$data->{munin} = 1;
+			}
+		}
 		push @res, $data;
 		if ( defined $hosts->{$host}->{host} ) {
-			push @res, get_hosts_munininfo($hosts->{$host}->{host});
+			push @res, get_hosts_munininfo($hosts->{$host}->{host}, $hosttemplates);
 		}
 	}
 	return @res;
@@ -79,7 +85,7 @@ sub main {#{{{
 
 	system("rm -rf /etc/munin/plugins/_tasmota__*");
 
-	foreach my $element ( get_hosts_munininfo($config->{host}) ) {
+	foreach my $element ( get_hosts_munininfo($config->{host}, $config->{hosttemplate}) ) {
 		if ( $element->{munin} ) {
 			my $host = $element->{host};
 			my $ip = $element->{ip} || $host;
