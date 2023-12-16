@@ -41,21 +41,22 @@ sub get_hosts_munininfo {#{{{
 
 	my @res;
 	foreach my $host ( sort keys %{$hosts} ) {
+		my $hi = $hosts->{$host};
 		my $data = {};
 		$data->{host} = $host;
-		$data->{ip} = $hosts->{$host}->{ip} || "";
-		$data->{type} = $hosts->{$host}->{type} || "";
-		if ( defined $hosts->{$host}->{service} && defined $hosts->{$host}->{service}->{munin} ) {
+		$data->{ip} = $hi->{ip} || "";
+		$data->{type} = $hi->{type} || "";
+		if ( defined $hi->{service} && defined $hi->{service}->{munin} ) {
 			$data->{munin} = 1;
 		}
-		if ( my $hosttemplate = $hosts->{$host}->{template} ) {
+		if ( my $hosttemplate = $hi->{template} ) {
 			if ( defined $hosttemplates->{$hosttemplate} && defined $hosttemplates->{$hosttemplate}->{service}->{munin} ) {
 				$data->{munin} = 1;
 			}
 		}
 		push @res, $data;
-		if ( defined $hosts->{$host}->{host} ) {
-			push @res, get_hosts_munininfo($hosts->{$host}->{host}, $hosttemplates);
+		if ( defined $hi->{host} ) {
+			push @res, get_hosts_munininfo($hi->{host}, $hosttemplates);
 		}
 	}
 	return @res;
