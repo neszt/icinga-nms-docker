@@ -79,14 +79,18 @@ htpasswd -D htpasswd.users [username]
 * [Ace syntax highlight](https://github.com/ajaxorg/ace)
 
 ## FAQ
-* why not separate docker?
- - on config change need to trigger services to restart
 
-* i dont like your built-in smokeping config ..
- - just override with your own
+### Why not separate docker?
 
-* i got "It appears as though you do not have permission ..." error message
- - just add your user to a\_icingaadmin alertgroup
+On config change need to trigger services to restart
+
+### I dont like your built-in smokeping config ..
+
+Just override with your own
+
+### I got "It appears as though you do not have permission ..." error message
+
+Just add your user to a\_icingaadmin alertgroup
 
 ## TODO
 * online demo
