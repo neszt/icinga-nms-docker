@@ -10,6 +10,7 @@ This is Icinga dockerized with smokeping and munin. All configuration is control
  * custom smokeping config allowed
  * custom icinga plugins allowed
  * mattermost notification
+ * sms notification
 
 ## INSTALL
 ```bash
@@ -19,10 +20,10 @@ git clone https://github.com/neszt/icinga-nms-docker.git
 ### docker-compose
 ```bash
 cd deploy/docker-compose
-mkdir -p data/config
-cp ../nag.xml.sample data/config/nag.xml
+mkdir data
+cp -va ../../content/usr/local/config.sample data/config
 cp .env.sample .env
-# edit .env and nag.xml file correctly
+# edit .env and data/config/* files correctly
 ./start.sh
 ```
 
@@ -94,3 +95,4 @@ Just add your user to a\_icingaadmin alertgroup.
 * screenshots
 * upgrade to icinga2
 * upgrade to munin3
+* host config backup
