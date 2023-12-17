@@ -79,15 +79,15 @@ htpasswd -D htpasswd.users [username]
 
 ### Why not separate docker?
 
-On config change need to trigger services to restart
+On config change need to trigger services to restart.
 
 ### I dont like your built-in smokeping config ..
 
-Just override with your own
+Just override with your own.
 
 ### I got "It appears as though you do not have permission ..." error message
 
-Just add your user to a\_icingaadmin alertgroup
+Just add your user to a\_icingaadmin alertgroup.
 
 ## TODO
 * online demo
