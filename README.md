@@ -27,6 +27,13 @@ cp .env.sample .env
 ./start.sh
 ```
 
+### Available Multi-Arch Images
+
+[CI/CD](https://github.com/neszt/icinga-nms-docker/actions) will automatically build, test and push new images to container registries. Currently, the following registries are supported:
+
+- [DockerHub](https://hub.docker.com/r/neszt/icinga-nms-docker)
+- [GitHub Container Registry](https://github.com/users/neszt/packages/container/package/icinga-nms-docker)
+
 ## HOWTO USE
 
 ### Modify network hosts, services, topolgy
