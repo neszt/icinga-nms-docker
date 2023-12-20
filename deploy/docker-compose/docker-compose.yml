@@ -3,7 +3,7 @@ services:
   icinga-nms:
     hostname: icinga-nms
     restart: always
-    image: neszt/icinga-nms:$VERSION
+    image: neszt/icinga-nms-docker:$VERSION
     ports:
       - "$NMS_PORT:8080"
       - "$ICINGA_PORT:8081"
