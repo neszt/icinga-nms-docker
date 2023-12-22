@@ -46,4 +46,6 @@ jobs:
           push: true
           tags: |
             neszt/icinga-nms-docker:${{ github.ref_name }}
+            neszt/icinga-nms-docker:latest
             ghcr.io/neszt/icinga-nms-docker:${{ github.ref_name }}
+            ghcr.io/neszt/icinga-nms-docker:latest
