@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# nagios: -epn
 
 use strict;
 use warnings;
