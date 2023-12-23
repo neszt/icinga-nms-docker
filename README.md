@@ -14,17 +14,17 @@ This is Icinga dockerized with smokeping and munin. All configuration is control
 
 ## INSTALL
 ```bash
-git clone https://github.com/neszt/icinga-nms-docker.git
+$ git clone https://github.com/neszt/icinga-nms-docker.git
 ```
 
 ### docker-compose
 ```bash
-cd deploy/docker-compose
-mkdir data
-cp -va ../../content/usr/local/config.sample data/config
-cp .env.sample .env
+$ cd deploy/docker-compose
+$ mkdir data
+$ cp -va ../../content/usr/local/config.sample data/config
+$ cp .env.sample .env
 # edit .env and data/config/* files correctly
-./start.sh
+$ ./start.sh
 ```
 
 ### Available Multi-Arch Images
