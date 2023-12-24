@@ -22,7 +22,8 @@
 
 import argparse
 import json
-import urllib2
+import urllib.request
+from urllib.parse import quote
 
 VERSION = "0.3.1"
 
@@ -103,12 +104,13 @@ def payload(args):
 
 
 def request(url, data):
-    req = urllib2.Request(url, data)
-    response = urllib2.urlopen(req)
+    data = data.encode('utf-8')
+    req = urllib.request.Request(url, data)
+    response = urllib.request.urlopen(req)
     return response.read()
 
 
 if __name__ == "__main__":
     args = parse()
     response = request(args.url, payload(args))
-    print response
+    print(response.decode('utf-8'))
