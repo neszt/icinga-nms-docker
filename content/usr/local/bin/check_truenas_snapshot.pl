@@ -19,6 +19,7 @@ sub HELP_MESSAGE {#{{{
 	print "-a    api key\n";
 	print "-d    dataset name\n";
 	print "-m    snapshot mask, default: auto-YMD.H00-2w\n";
+	print "-o    time offset in hours, default 0\n";
 }#}}}
 
 sub truenas_api_call {#{{{
@@ -42,10 +43,11 @@ sub build_url {#{{{
 	my $server_name = shift;
 	my $dataset_name = shift;
 	my $snapshot_mask = shift;
+	my $time_offset_hours = shift // 0;
 
 	my $snapshot_id = $dataset_name . '@' . $snapshot_mask;
 
-	my @ido = localtime(time);
+	my @ido = localtime(time - 3600 * $time_offset_hours);
 	my $year = $ido[5] + 1900;
 	my $month = sprintf("%02d", $ido[4] + 1);
 	my $day = sprintf("%02d", $ido[3]);
@@ -66,12 +68,13 @@ sub main {#{{{
 
 	my $options = {};
 	$Getopt::Std::STANDARD_HELP_VERSION = 1;
-	getopts('hs:a:d:m:', $options);
+	getopts('hs:a:d:m:o:', $options);
 
 	my $server_name = $options->{s};
 	my $api_key = $options->{a};
 	my $dataset_name = $options->{d};
 	my $snapshot_mask = $options->{m};
+	my $time_offset_hours = $options->{o};
 
 	if ( !$server_name || !$api_key || !$dataset_name ) {
 		HELP_MESSAGE();
@@ -87,7 +90,7 @@ sub main {#{{{
 	$ua->default_headers($headers);
 	$ua->env_proxy();
 
-	my ($url, $snapshot_id_info) = build_url($server_name, $dataset_name, $snapshot_mask);
+	my ($url, $snapshot_id_info) = build_url($server_name, $dataset_name, $snapshot_mask, $time_offset_hours);
 	my $data = truenas_api_call($ua, $url);
 
 	my $r;
