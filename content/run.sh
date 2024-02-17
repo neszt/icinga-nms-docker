@@ -70,4 +70,10 @@ git config --global pull.rebase false
 
 cd /config && touch nag.xml && gen_config.sh 1
 
+#
+# Hosts
+#
+
+cat hosts 2>/dev/null >> /etc/hosts
+
 runsvdir /etc/service

@@ -69,6 +69,7 @@ htpasswd -D htpasswd.users [username]
 * SSH -> Smokeping graph
 
 ### Custom config
+* hosts
 * htpasswd.users
 * icinga.conf.d/
 * icinga\_plugins/
