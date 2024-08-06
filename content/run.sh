@@ -27,7 +27,8 @@ sed -i "s,__MATTERMOST_USERNAME__,$MATTERMOST_USERNAME,g" /etc/nagios-plugins/co
 # SSH / SSL
 #
 
-(cd /config/ssh && test -f id_rsa_base || ssh-keygen -f id_rsa_base -t rsa -N '')
+echo -e $SSH_RSA_KEY_BASE > /config/ssh/id_rsa_base
+echo -e $SSH_RSA_KEY_BASE_PUB > /config/ssh/id_rsa_base.pub
 chmod 600 /config/ssh/id_rsa*
 mkdir -p /root/.ssh
 sed -i 's/^CipherString = DEFAULT@SECLEVEL=2/CipherString = DEFAULT@SECLEVEL=1/' /etc/ssl/openssl.cnf
