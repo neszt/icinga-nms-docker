@@ -27,13 +27,14 @@ sed -i "s,__MATTERMOST_USERNAME__,$MATTERMOST_USERNAME,g" /etc/nagios-plugins/co
 # SSH / SSL
 #
 
-echo -e $SSH_RSA_KEY_BASE > /config/ssh/id_rsa_base
-echo -e $SSH_RSA_KEY_BASE_PUB > /config/ssh/id_rsa_base.pub
-chmod 600 /config/ssh/id_rsa*
-mkdir -p /root/.ssh
+KEY_DIR=/root/.ssh
+mkdir -p $KEY_DIR
+echo -e $SSH_RSA_KEY_BASE > $KEY_DIR/id_rsa_base
+echo -e $SSH_RSA_KEY_BASE_PUB > $KEY_DIR/id_rsa_base.pub
+chmod 600 $KEY_DIR/id_rsa*
 sed -i 's/^CipherString = DEFAULT@SECLEVEL=2/CipherString = DEFAULT@SECLEVEL=1/' /etc/ssl/openssl.cnf
-echo "Host *" >> ~/.ssh/config
-echo "  IdentityFile ~/.ssh/id_rsa_base" >> ~/.ssh/config
+echo "Host *" >> $KEY_DIR/config
+echo "  IdentityFile ~/.ssh/id_rsa_base" >> $KEY_DIR/config
 
 #
 # Smokeping
