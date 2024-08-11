@@ -38,7 +38,11 @@ test -f /config/pgpass && cp /config/pgpass /var/lib/nagios && chown nagios: /va
 # SSH
 #
 
-cp -a /config/ssh/* /root/.ssh/
+#
+# no error if no file
+#
+
+cp -a /config/ssh/* /root/.ssh/ 2>/dev/null || true
 
 #
 # Certs
