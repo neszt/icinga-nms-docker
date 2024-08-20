@@ -3,7 +3,7 @@ FROM debian:bullseye
 MAINTAINER Neszt Tibor <tibor@neszt.hu>
 LABEL org.opencontainers.image.source https://github.com/neszt/icinga-nms-docker
 
-ENV CHECK_SSL_CERT_VERSION=e969f486be576ee899ff0326dc44402b8fbf3f3a
+ENV CHECK_SSL_CERT_VERSION=v2.83.0
 ENV CHECK_RBL_VERSION=0262c7104267c8555e80dea8e2d1347df0c7a485
 ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
 ENV CHECK_IPMI_SENSOR_VERSION=v3.14
