@@ -23,6 +23,8 @@ sed -i "s,__ICINGA_EXTINFO__,$ICINGA_EXTINFO,g" /etc/nagios-plugins/config/matte
 sed -i "s,__MATTERMOST_HOOK__,$MATTERMOST_HOOK,g" /etc/nagios-plugins/config/mattermost.cfg
 sed -i "s,__MATTERMOST_USERNAME__,$MATTERMOST_USERNAME,g" /etc/nagios-plugins/config/mattermost.cfg
 
+[ -z "${ICINGA_PORT}" ] && rf -rf etc/service/icinga
+
 #
 # SSH / SSL
 #
@@ -45,6 +47,8 @@ sed -i '/^cgiurl/d' /etc/smokeping/config.d/General
 echo cgiurl = $SMOKEPING_URL \# Autgenereated >> /etc/smokeping/config.d/General
 mkdir -p /var/run/smokeping /var/lib/smokeping/__cgi && chown smokeping: /var/lib/smokeping/__cgi
 
+[ -z "${SMOKEPING_PORT}" ] && rf -rf etc/service/smokeping
+
 #
 # Munin
 #
@@ -52,6 +56,8 @@ mkdir -p /var/run/smokeping /var/lib/smokeping/__cgi && chown smokeping: /var/li
 mkdir -p /var/lib/munin /var/lib/munin/cgi-tmp/munin-cgi-graph
 chown -R munin: /var/lib/munin
 chown -R www-data: /var/lib/munin/cgi-tmp
+
+[ -z "${MUNIN_PORT}" ] && rf -rf etc/service/munin
 
 #
 # Php-fpm
