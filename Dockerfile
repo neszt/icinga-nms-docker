@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
 MAINTAINER Neszt Tibor <tibor@neszt.hu>
 LABEL org.opencontainers.image.source https://github.com/neszt/icinga-nms-docker
@@ -22,10 +22,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	curl https://raw.githubusercontent.com/neszt/check-librenms-alerts/${CHECK_LIBRENMS_ALERTS_VERSION}/check_librenms_alerts.pl > /usr/local/bin/check_librenms_alerts.pl && chmod +x /usr/local/bin/check_librenms_alerts.pl && \
 	curl https://raw.githubusercontent.com/StewLG/check_truenas_extended_play/${CHECK_TRUENAS_EXTENDED_PLAY_VERSION}/check_truenas_extended_play.py > /usr/local/bin/check_truenas_extended_play.py && chmod +x /usr/local/bin/check_truenas_extended_play.py && \
 	# conf php-fpm to not clear env variables
-	sed -i '/clear_env/s/^;//' /etc/php/7.4/fpm/pool.d/www.conf && \
+	sed -i '/clear_env/s/^;//' /etc/php/8.2/fpm/pool.d/www.conf && \
 	# conf php-fpm to enable root user and group
-	sed -i '/^user/s/www-data/root/' /etc/php/7.4/fpm/pool.d/www.conf && \
-	sed -i '/^group/s/www-data/root/' /etc/php/7.4/fpm/pool.d/www.conf && \
+	sed -i '/^user/s/www-data/root/' /etc/php/8.2/fpm/pool.d/www.conf && \
+	sed -i '/^group/s/www-data/root/' /etc/php/8.2/fpm/pool.d/www.conf && \
 	# remove nginx default site
 	rm /etc/nginx/sites-enabled/default && \
 	# icinga
