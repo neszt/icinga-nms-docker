@@ -74,7 +74,9 @@ sub main {#{{{
 	my $probes = {
 		ping => {
 			0 => 'FPing',
-			1 => 'FPing',
+			1 => 'FPing2',
+			2 => 'FPing3',
+			3 => 'FPing4',
 		},
 	};
 	my $check_map = {
