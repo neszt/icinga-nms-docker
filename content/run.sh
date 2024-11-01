@@ -63,7 +63,7 @@ chown -R www-data: /var/lib/munin/cgi-tmp
 # Timezone
 #
 
-test -f /usr/share/zoneinfo/${TIMEZONE} && ln -s /usr/share/zoneinfo/${TIMEZONE} /etc/localtime || echo Timezone error - Invalid TIMEZONE: [${TIMEZONE}]
+test -f /usr/share/zoneinfo/${TIMEZONE} && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime || echo Timezone error - Invalid TIMEZONE: [${TIMEZONE}]
 dpkg-reconfigure --frontend noninteractive tzdata
 
 #
