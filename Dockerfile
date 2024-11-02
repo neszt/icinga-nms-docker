@@ -40,6 +40,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	mkdir -p /var/run/munin && chown munin:root /var/run/munin && \
 	sed -i '/^#graph_strategy/a graph_strategy cgi' /etc/munin/munin.conf && \
 	sed -i 's/^background/# backround/;s/^setsid 1/setsid 0/' /etc/munin/munin-node.conf && \
+	# munin-node bug: Can't connect to TCP port 4949 on :: [Invalid argument]
+	sed -i 's/^host \*/host 0.0.0.0/' /etc/munin/munin-node.conf && \
 	# COPY content / fix, see: https://github.com/docker/buildx/issues/150
 	rm -rf /etc/service
 
