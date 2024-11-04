@@ -9,7 +9,7 @@ server {
 	location = /smokeping/ {
 		include /etc/nginx/fastcgi_params;
 		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/smokeping.cgi;
-		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		fastcgi_pass unix:/var/run/smokeping.socket;
 		fastcgi_connect_timeout 120s;
 		fastcgi_send_timeout 120s;
 		fastcgi_read_timeout 120s;
