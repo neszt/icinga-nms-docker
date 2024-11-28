@@ -30,7 +30,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	rm /etc/nginx/sites-enabled/default && \
 	# icinga
 	sed -i 's/^check_external_commands.*$/check_external_commands=1/' /etc/icinga/icinga.cfg && \
-	touch /var/cache/icinga/objects.cache && chown nagios:www-data /var/cache/icinga/objects.cache && \
+	touch /var/cache/icinga/objects.cache && chown nagios:www-data /var/cache/icinga/objects.cache && chmod 766 /var/cache/icinga/objects.cache && \
 	find /etc/icinga/objects/*.cfg | grep -Ev "contacts|timeperiods" | xargs rm && \
 	# include our custom smokeping config
 	echo "@include /etc/smokeping/config.d/Nagios" >> /etc/smokeping/config && \
