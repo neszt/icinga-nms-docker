@@ -86,6 +86,6 @@ cp /config/radcli/* /etc/radcli/ 2>/dev/null || true
 # Restart services if runsvdir running
 #
 
-pidof runsvdir >/dev/null && sv restart smokeping && sv restart fcgi-smokeping && sv restart icinga && sv restart munin-node
+pidof runsvdir >/dev/null && (test -d /etc/service/smokeping && sv restart smokeping) && (test -d /etc/service/fcgi-smokeping && sv restart fcgi-smokeping) && (test -d /etc/service/icinga && sv restart icinga) && (test -d /etc/service/munin-node && sv restart munin-node)
 
 git.pl $IS_GIT_FORCE
