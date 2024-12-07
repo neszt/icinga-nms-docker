@@ -3,6 +3,7 @@ FROM debian:bookworm
 MAINTAINER Neszt Tibor <tibor@neszt.hu>
 LABEL org.opencontainers.image.source https://github.com/neszt/icinga-nms-docker
 
+ENV ACEJS=v1.36.5
 ENV CHECK_SSL_CERT_VERSION=v2.84.5
 ENV CHECK_RBL_VERSION=52183405778a95c224652bc261216c9a749288dc
 ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
@@ -14,6 +15,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	echo deb http://deb.debian.org/debian buster main >> /etc/apt/sources.list && \
 	apt-get update && apt-get -y dist-upgrade && \
 	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl bc freeipmi-tools nagios-plugins-contrib && \
+	# ace.js min
+	curl https://raw.githubusercontent.com/ajaxorg/ace-builds/refs/tags/${ACEJS}/src-min/ace.js > /var/www/html/ace.js && \
 	# nagios-plugins-contrib upgrades
 	curl https://raw.githubusercontent.com/matteocorti/check_ssl_cert/${CHECK_SSL_CERT_VERSION}/check_ssl_cert > /usr/lib/nagios/plugins/check_ssl_cert && \
 	curl https://raw.githubusercontent.com/matteocorti/check_rbl/${CHECK_RBL_VERSION}/check_rbl | sed '1 s/^.*$/#!\/usr\/bin\/perl/' > /usr/lib/nagios/plugins/check_rbl && \
