@@ -91,4 +91,4 @@ cd /config && touch nag.xml && gen_config.sh 1
 
 cat hosts 2>/dev/null >> /etc/hosts
 
-runsvdir /etc/service
+exec runsvdir /etc/service

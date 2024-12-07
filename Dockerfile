@@ -47,4 +47,4 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 COPY content /
 
-CMD "/run.sh"
+CMD ["/run.sh"]
