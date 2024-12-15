@@ -129,7 +129,7 @@ sub main {#{{{
 		print "++ $host_az\n";
 		print "probe = $probe\n";
 		print "menu = $host\n";
-		print "title = $host\n";
+		print "title = $host" . ($e->{ip} ? " ($e->{ip})" : '') . "\n";
 		print "host = $ip\n\n";
 		foreach my $service ( keys %{$e->{services}} ) {
 			my @args = split('!', $service);
