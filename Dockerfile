@@ -45,6 +45,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	sed -i 's/^background/# backround/;s/^setsid 1/setsid 0/' /etc/munin/munin-node.conf && \
 	# munin-node bug: Can't connect to TCP port 4949 on :: [Invalid argument]
 	sed -i 's/^host \*/host 0.0.0.0/' /etc/munin/munin-node.conf && \
+	# fontconfig cache permission fix
+	chmod -R 777 /var/cache/fontconfig
 	# COPY content / fix, see: https://github.com/docker/buildx/issues/150
 	rm -rf /etc/service
 
