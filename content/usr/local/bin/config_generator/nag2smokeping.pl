@@ -113,6 +113,8 @@ sub main {#{{{
 	my $i = 0;
 	my $mod = keys %{$probes->{ping}};
 	foreach my $e ( get_hosts($config->{host}) ) {
+		next if $e->{type} eq 'DOCKER';
+
 		my $host = $e->{host};
 		my $ip = $e->{ip} || $host;
 
