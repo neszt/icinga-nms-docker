@@ -17,4 +17,82 @@ server {
 		auth_basic "NMS Access";
 		auth_basic_user_file /config/htpasswd.users;
 	}
+
+	location /icinga {
+		alias /usr/share/icinga/htdocs;
+		index index.html;
+		auth_basic "Icinga Access";
+		auth_basic_user_file /config/htpasswd.users;
+	}
+
+	location /icinga/stylesheets {
+		alias /etc/icinga/stylesheets;
+		auth_basic "Icinga Access";
+		auth_basic_user_file /config/htpasswd.users;
+	}
+
+	location /cgi-bin/icinga/ {
+		root /usr/lib/cgi-bin/icinga;
+		rewrite ^/cgi-bin/icinga/(.*)\.cgi /$1.cgi break;
+		include /etc/nginx/fastcgi_params;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		auth_basic "Icinga Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location = /smokeping/ {
+		include /etc/nginx/fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/cgi-bin/smokeping.cgi;
+		fastcgi_pass unix:/var/run/smokeping.socket;
+		fastcgi_connect_timeout 120s;
+		fastcgi_send_timeout 120s;
+		fastcgi_read_timeout 120s;
+		auth_basic "Smokeping Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location ^~ /smokeping/ {
+		alias /usr/share/smokeping/www/;
+		index smokeping.cgi;
+		auth_basic "Smokeping Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location ^~ /munin-cgi/munin-cgi-graph/ {
+		fastcgi_split_path_info ^(/munin-cgi/munin-cgi-graph)(.*);
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/munin/cgi/munin-cgi-graph;
+		include fastcgi_params;
+		auth_basic "Munin Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location /munin/static/ {
+		alias /etc/munin/static/;
+		auth_basic "Munin Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
+
+	location /munin/ {
+		fastcgi_split_path_info ^(/munin)(.*);
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_pass unix:/var/run/fcgiwrap.socket;
+		fastcgi_param SCRIPT_FILENAME /usr/lib/munin/cgi/munin-cgi-html;
+		include fastcgi_params;
+		auth_basic "Munin Access";
+		auth_basic_user_file /config/htpasswd.users;
+		fastcgi_param AUTH_USER $remote_user;
+		fastcgi_param REMOTE_USER $remote_user;
+	}
 }
