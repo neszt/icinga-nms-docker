@@ -1,38 +1,39 @@
 server {
-        listen 80;
-        listen [::]:80;
+	listen 80;
+	listen [::]:80;
 
-        server_name nms.yourdomain.tld;
+	server_name nms.yourdomain.tld;
 
-        location / {
-                return 302 https://$server_name$request_uri;
-        }
+	location / {
+		return 302 https://$server_name$request_uri;
+	}
 
-        location ^~ /.well-known/acme-challenge/ {
-                alias /var/lib/dehydrated/acme-challenges/;
-        }
+	location ^~ /.well-known/acme-challenge/ {
+		alias /var/lib/dehydrated/acme-challenges/;
+	}
 }
 
 server {
-        listen 443 ssl ;
-        listen [::]:443 ssl ;
-        server_name nms.yourdomain.tld ;
+	listen 443 ssl ;
+	listen [::]:443 ssl ;
+	server_name nms.yourdomain.tld;
 
-        ssl_certificate /var/lib/dehydrated/certs/nms.yourdomain.tld/fullchain.pem;
-        ssl_certificate_key /var/lib/dehydrated/certs/nms.yourdomain.tld/privkey.pem;
-        ssl_session_cache shared:SSL:1m;
+	ssl_certificate /var/lib/dehydrated/certs/nms.yourdomain.tld/fullchain.pem;
+	ssl_certificate_key /var/lib/dehydrated/certs/nms.yourdomain.tld/privkey.pem;
+	ssl_session_cache shared:SSL:1m;
 
-        root /var/www/html;
+	root /var/www/html;
 
-        location / {
-                proxy_pass http://127.0.0.1:9990/;
-                include proxy_params;
+	location / {
+		proxy_pass http://127.0.0.1:9990/;
+		include proxy_params;
 
-                allow all;
+		allow all;
 
-                # allow 10.0.0.0/8;
-                # allow 192.168.0.0/16;
-                # allow 172.16.0.0/12;
-                # deny all;
-        }
+		# allow 10.0.0.0/8;
+		# allow 192.168.0.0/16;
+		# allow 172.16.0.0/12;
+		# deny all;
+	}
+
 }
