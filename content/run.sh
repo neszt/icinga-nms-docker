@@ -91,4 +91,10 @@ cd /config && touch nag.xml && gen_config.sh 1
 
 cat hosts 2>/dev/null >> /etc/hosts
 
+#
+# Autopull
+#
+
+[ -z "${GIT_AUTOPULL}" ] && rm -rf /etc/cron.d/autopull
+
 exec runsvdir /etc/service
