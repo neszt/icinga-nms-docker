@@ -1,1 +1,1 @@
-* * * * * root /usr/local/bin/autopull.sh
+* * * * * root /usr/local/bin/autopull.sh > /proc/1/fd/1 2>&1
