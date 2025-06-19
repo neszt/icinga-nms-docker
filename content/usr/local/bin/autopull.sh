@@ -16,7 +16,7 @@ if [ $LOCAL = $REMOTE ]; then
 elif [ $LOCAL = $BASE ]; then
     echo "Autopull - Need to pull"
     git pull
-    gen_config.sh
+    /usr/local/bin/gen_config.sh
 else
     echo "Autopull - Unknown case"
 fi
