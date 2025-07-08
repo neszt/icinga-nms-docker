@@ -11,6 +11,9 @@ LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
+TS=$(date)
+echo -n "[$TS] "
+
 if [ $LOCAL = $REMOTE ]; then
     echo "Autopull - Up-to-date"
 elif [ $LOCAL = $BASE ]; then
