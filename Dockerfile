@@ -3,7 +3,7 @@ FROM debian:bookworm
 MAINTAINER Neszt Tibor <tibor@neszt.hu>
 LABEL org.opencontainers.image.source https://github.com/neszt/icinga-nms-docker
 
-ENV ACEJS=v1.32.0
+ENV ACEJS=v1.43.3
 ENV CHECK_SSL_CERT_VERSION=v2.93.0
 ENV CHECK_RBL_VERSION=v1.7.7
 ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
