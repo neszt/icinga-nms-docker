@@ -6,6 +6,8 @@ use XML::Simple;
 $XML::Simple::PREFERRED_PARSER = 'XML::Parser';
 
 my $map = {};
+my $check_ping_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check_ping_4' : 'check_ping';
+my $check_host_alive_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check-host-alive' : 'check-host-alive_4';
 
 sub put {#{{{
 	my $string = shift;
@@ -199,7 +201,7 @@ sub gen_services {#{{{
 		put(" notification_period workhours\n");
 		put(" notification_options c,w,r\n");
 		put(" notifications_enabled " . ( $pingservice eq 'enabled' ? '1' : '0' ) . "\n");
-		put(" check_command check_ping!100,10%!500,30%\n");
+		put(" check_command $check_ping_cmd!100,10%!500,30%\n");
 		put(" }\n");
 	}
 
@@ -257,7 +259,7 @@ sub gen_hosts {#{{{
 		put(" max_check_attempts " . ( $e->{retires} // 3 ) . "\n");
 		put(" check_period 24x7\n");
 		put(" notification_options d,u,r\n");
-		put(" check_command check-host-alive\n");
+		put(" check_command $check_host_alive_cmd\n");
 		put(" contact_groups " . $map->{hostgroup_alerts}->{$hostgroup}. "\n");
 		if ( $e->{check_period} ) {
 			put(" notification_period $e->{check_period}\n");
