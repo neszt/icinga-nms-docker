@@ -7,7 +7,7 @@ $XML::Simple::PREFERRED_PARSER = 'XML::Parser';
 
 my $map = {};
 my $check_ping_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check_ping_4' : 'check_ping';
-my $check_host_alive_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check-host-alive' : 'check-host-alive_4';
+my $check_host_alive_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check-host-alive_4' : 'check-host-alive';
 
 sub put {#{{{
 	my $string = shift;
