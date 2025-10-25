@@ -47,6 +47,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	sed -i 's/^host \*/host 0.0.0.0/' /etc/munin/munin-node.conf && \
 	# fontconfig cache permission fix
 	chmod -R 777 /var/cache/fontconfig && \
+	# Clean apt cache
+	apt-get clean && \
+	rm -rf /var/lib/apt/lists/* && \
 	# COPY content / fix, see: https://github.com/docker/buildx/issues/150
 	rm -rf /etc/service
 
