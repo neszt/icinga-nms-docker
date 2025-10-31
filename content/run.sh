@@ -20,8 +20,6 @@ mkdir -p /var/log/icinga/archives && chown nagios:adm /var/log/icinga/archives
 
 cp -a /config/icinga_plugins/* /usr/local/sbin/ >/dev/null 2>/dev/null || true
 sed -i "s,__ICINGA_EXTINFO__,$ICINGA_EXTINFO,g" /etc/nagios-plugins/config/mattermost.cfg
-sed -i "s,__MATTERMOST_HOOK__,$MATTERMOST_HOOK,g" /etc/nagios-plugins/config/mattermost.cfg
-sed -i "s,__MATTERMOST_USERNAME__,$MATTERMOST_USERNAME,g" /etc/nagios-plugins/config/mattermost.cfg
 
 [ -z "${ICINGA_EXTINFO}" ] && rm -rf /etc/service/icinga
 

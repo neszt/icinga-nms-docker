@@ -4,7 +4,7 @@
   <git commit_message="" do_commit="0" help="To store this xml config and all other config to git, write commit message and set do_commit to 1"/>
   <company id="Own"/>
   <person id="admin" alert="yes" epager="+36..."/>
-  <person id="mattermost" name="Mattermost" alert="yes" epager=""/>
+  <person id="mattermost" name="Mattermost" alert="yes" epager="https://mm.yourdomain.tld/hooks/.........................."/>
   <alertgroup id="a_main" name="Main alerts" persons="mattermost admin"/>
   <alertgroup id="a_icingaadmin" name="Icingaadmin alerts" persons="admin"/>
   <hostgroup id="h_core" name="Core hosts" alerts="a_main"/>
