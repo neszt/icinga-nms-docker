@@ -1,1 +1,1 @@
-* * * * * root /usr/local/bin/autopull.sh > /proc/1/fd/1 2>&1
+__GIT_AUTOPULL_SCHEDULE__ root /usr/local/bin/autopull.sh > /proc/1/fd/1 2>&1
