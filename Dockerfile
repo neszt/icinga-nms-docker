@@ -15,7 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	# buster needed for older icinga
 	echo deb http://archive.debian.org/debian buster main >> /etc/apt/sources.list && \
 	apt-get update && apt-get -y dist-upgrade && \
-	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl libswitch-perl bc freeipmi-tools nagios-plugins-contrib && \
+	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl libswitch-perl bc freeipmi-tools nagios-plugins-contrib sipsak && \
 	# ace.js min
 	curl https://raw.githubusercontent.com/ajaxorg/ace-builds/refs/tags/${ACEJS}/src-min/ace.js > /var/www/html/ace.js && \
 	# nagios-plugins-contrib upgrades

@@ -106,6 +106,11 @@ sub main {#{{{
 			probe_postfix => 'dns',
 			menu_postfix => 'DNS',
 		},
+		'check_sip' => {
+			probe => 'SipSak',
+			probe_postfix => 'sip',
+			menu_postfix => 'SIP',
+		},
 	};
 
 	my $hosts = {};

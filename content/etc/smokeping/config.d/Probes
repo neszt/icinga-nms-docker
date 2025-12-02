@@ -77,3 +77,16 @@ forks = 5
 offset = 50%
 timeout = 15
 step = 60
+
++SipSak
+binary = /usr/bin/sipsak
+forks = 5
+offset = 50%
+step = 60
+timeout = 15
+# The following variables can be overridden in each target section
+keep_second = yes
+params = --numeric
+pings = 10
+sipsak_timeout = 2
+user = nobody
