@@ -9,12 +9,13 @@ ENV CHECK_RBL_VERSION=v1.7.7
 ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
 ENV CHECK_IPMI_SENSOR_VERSION=v3.14
 ENV CHECK_TRUENAS_EXTENDED_PLAY_VERSION=ebae18bc20fbebd512294fbdbf3fb8b2b64794c9
+ENV CHECK_SIP_VERSION=aa441910e624260c047b7dce9cd09c01bc57980d
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	# buster needed for older icinga
 	echo deb http://archive.debian.org/debian buster main >> /etc/apt/sources.list && \
 	apt-get update && apt-get -y dist-upgrade && \
-	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl bc freeipmi-tools nagios-plugins-contrib && \
+	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl libswitch-perl bc freeipmi-tools nagios-plugins-contrib && \
 	# ace.js min
 	curl https://raw.githubusercontent.com/ajaxorg/ace-builds/refs/tags/${ACEJS}/src-min/ace.js > /var/www/html/ace.js && \
 	# nagios-plugins-contrib upgrades
@@ -24,6 +25,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	# outer check scripts
 	curl https://raw.githubusercontent.com/neszt/check-librenms-alerts/${CHECK_LIBRENMS_ALERTS_VERSION}/check_librenms_alerts.pl > /usr/local/bin/check_librenms_alerts.pl && chmod +x /usr/local/bin/check_librenms_alerts.pl && \
 	curl https://raw.githubusercontent.com/StewLG/check_truenas_extended_play/${CHECK_TRUENAS_EXTENDED_PLAY_VERSION}/check_truenas_extended_play.py > /usr/local/bin/check_truenas_extended_play.py && chmod +x /usr/local/bin/check_truenas_extended_play.py && \
+	curl https://raw.githubusercontent.com/bashtoni/nagios-check-sip/${CHECK_SIP_VERSION}/check_sip > /usr/local/bin/check_sip && chmod +x /usr/local/bin/check_sip && \
+	sed -i '2i\# nagios: -epn' /usr/local/bin/check_sip && \
+	sed -i 's|/usr/lib64/nagios/plugins|/usr/lib/nagios/plugins|g' /usr/local/bin/check_sip && \
 	# conf php-fpm to not clear env variables
 	sed -i '/clear_env/s/^;//' /etc/php/8.2/fpm/pool.d/www.conf && \
 	# conf php-fpm to enable root user and group
