@@ -10,6 +10,8 @@ test -f /config/nag.xml || cp -a /usr/local/config.sample/* /config/
 # Icinga
 #
 
+echo "Setting up Icinga .."
+
 chown nagios:adm /var/log/icinga
 touch /var/log/icinga/icinga.log
 chmod 644 /var/log/icinga/icinga.log
@@ -21,7 +23,10 @@ mkdir -p /var/log/icinga/archives && chown nagios:adm /var/log/icinga/archives
 cp -a /config/icinga_plugins/* /usr/local/sbin/ >/dev/null 2>/dev/null || true
 sed -i "s,__ICINGA_EXTINFO__,$ICINGA_EXTINFO,g" /etc/nagios-plugins/config/mattermost.cfg
 
-[ -z "${ICINGA_EXTINFO}" ] && rm -rf /etc/service/icinga
+if [ -z "${ICINGA_EXTINFO}" ]; then
+    echo "ICINGA_EXTINFO is empty. Icinga disabled."
+    rm -rf /etc/service/icinga
+fi
 
 #
 # SSH / SSL
@@ -40,26 +45,38 @@ echo "  IdentityFile ~/.ssh/id_rsa_base" >> $KEY_DIR/config
 # Smokeping
 #
 
+echo "Setting up Smokeping .."
+
 chown -R smokeping: /var/lib/smokeping
 sed -i '/^cgiurl/d' /etc/smokeping/config.d/General
 echo cgiurl = $SMOKEPING_URL \# Autgenereated >> /etc/smokeping/config.d/General
 mkdir -p /var/run/smokeping /var/lib/smokeping/__cgi && chown smokeping: /var/lib/smokeping/__cgi
 
-[ -z "${SMOKEPING_URL}" ] && rm -rf /etc/service/smokeping
+if [ -z "${SMOKEPING_URL}" ]; then
+    echo "SMOKEPING_URL is empty. Smokeping disabled."
+    rm -rf /etc/service/smokeping
+fi
 
 #
 # Munin
 #
 
+echo "Setting up Smokeping .."
+
 mkdir -p /var/lib/munin /var/lib/munin/cgi-tmp/munin-cgi-graph
 chown -R munin: /var/lib/munin
 chown -R www-data: /var/lib/munin/cgi-tmp
 
-[ -z "${MUNIN_URL}" ] && rm -rf /etc/service/munin
+if [ -z "${MUNIN_URL}" ]; then
+    echo "MUNIN_URL is empty. Munin disabled."
+    rm -rf /etc/service/munin
+fi
 
 #
 # Timezone
 #
+
+echo "Setting up timezone .."
 
 test -f /usr/share/zoneinfo/${TIMEZONE} && ln -sf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime || echo Timezone error - Invalid TIMEZONE: [${TIMEZONE}]
 dpkg-reconfigure --frontend noninteractive tzdata
