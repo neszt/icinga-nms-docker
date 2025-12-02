@@ -99,7 +99,7 @@ if [ -z "${GIT_AUTOPULL_SCHEDULE}" ]; then
     echo "GIT_AUTOPULL_SCHEDULE is empty. Function disabled."
     rm -rf ${CRON_FILE}
 else
-    echo "GIT_AUTOPULL_SCHEDULE is set to [ ${GIT_AUTOPULL_SCHEDULE} ]. Funkcion enabled."
+    echo "GIT_AUTOPULL_SCHEDULE is set to [ ${GIT_AUTOPULL_SCHEDULE} ]. Function enabled."
 	sed -i "s|__GIT_AUTOPULL_SCHEDULE__|${GIT_AUTOPULL_SCHEDULE}|" ${CRON_FILE}
 fi
 
