@@ -61,7 +61,7 @@ fi
 # Munin
 #
 
-echo "Setting up Smokeping .."
+echo "Setting up Munin .."
 
 mkdir -p /var/lib/munin /var/lib/munin/cgi-tmp/munin-cgi-graph
 chown -R munin: /var/lib/munin
