@@ -100,7 +100,7 @@ if [ -z "${GIT_AUTOPULL_SCHEDULE}" ]; then
     rm -rf ${CRON_FILE}
 else
     echo "GIT_AUTOPULL_SCHEDULE is set to [ ${GIT_AUTOPULL_SCHEDULE} ]. Funkcion enabled."
-	sed -i "s/__GIT_AUTOPULL_SCHEDULE__/$GIT_AUTOPULL_SCHEDULE/" ${CRON_FILE}
+	sed -i "s/__GIT_AUTOPULL_SCHEDULE__/${GIT_AUTOPULL_SCHEDULE}/" ${CRON_FILE}
 fi
 
 exec runsvdir /etc/service
