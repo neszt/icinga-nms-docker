@@ -69,7 +69,7 @@ chown -R www-data: /var/lib/munin/cgi-tmp
 
 if [ -z "${MUNIN_URL}" ]; then
     echo "MUNIN_URL is empty. Munin disabled."
-    rm -rf /etc/service/munin
+    rm -rf /etc/cron.d/munin
 fi
 
 #
