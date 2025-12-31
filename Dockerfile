@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-MAINTAINER Neszt Tibor <tibor@neszt.hu>
+LABEL maintainer="Neszt Tibor <tibor@neszt.hu>"
 LABEL org.opencontainers.image.source https://github.com/neszt/icinga-nms-docker
 
 ENV ACEJS=v1.43.3
