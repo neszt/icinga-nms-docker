@@ -17,15 +17,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get update && apt-get -y dist-upgrade && \
 	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl libswitch-perl bc freeipmi-tools nagios-plugins-contrib sipsak && \
 	# ace.js min
-	curl https://raw.githubusercontent.com/ajaxorg/ace-builds/refs/tags/${ACEJS}/src-min/ace.js > /var/www/html/ace.js && \
+	curl -fL https://raw.githubusercontent.com/ajaxorg/ace-builds/refs/tags/${ACEJS}/src-min/ace.js > /var/www/html/ace.js && \
 	# nagios-plugins-contrib upgrades
-	curl https://raw.githubusercontent.com/matteocorti/check_ssl_cert/${CHECK_SSL_CERT_VERSION}/check_ssl_cert > /usr/lib/nagios/plugins/check_ssl_cert && \
-	curl https://raw.githubusercontent.com/matteocorti/check_rbl/${CHECK_RBL_VERSION}/check_rbl | sed '1 s/^.*$/#!\/usr\/bin\/perl/' > /usr/lib/nagios/plugins/check_rbl && \
-	curl https://raw.githubusercontent.com/thomas-krenn/check_ipmi_sensor_v3/${CHECK_IPMI_SENSOR_VERSION}/check_ipmi_sensor > /usr/lib/nagios/plugins/check_ipmi_sensor && \
+	curl -fL https://raw.githubusercontent.com/matteocorti/check_ssl_cert/${CHECK_SSL_CERT_VERSION}/check_ssl_cert > /usr/lib/nagios/plugins/check_ssl_cert && \
+	curl -fL https://raw.githubusercontent.com/matteocorti/check_rbl/${CHECK_RBL_VERSION}/check_rbl | sed '1 s/^.*$/#!\/usr\/bin\/perl/' > /usr/lib/nagios/plugins/check_rbl && \
+	curl -fL https://raw.githubusercontent.com/thomas-krenn/check_ipmi_sensor_v3/${CHECK_IPMI_SENSOR_VERSION}/check_ipmi_sensor > /usr/lib/nagios/plugins/check_ipmi_sensor && \
 	# outer check scripts
-	curl https://raw.githubusercontent.com/neszt/check-librenms-alerts/${CHECK_LIBRENMS_ALERTS_VERSION}/check_librenms_alerts.pl > /usr/local/bin/check_librenms_alerts.pl && chmod +x /usr/local/bin/check_librenms_alerts.pl && \
-	curl https://raw.githubusercontent.com/StewLG/check_truenas_extended_play/${CHECK_TRUENAS_EXTENDED_PLAY_VERSION}/check_truenas_extended_play.py > /usr/local/bin/check_truenas_extended_play.py && chmod +x /usr/local/bin/check_truenas_extended_play.py && \
-	curl https://raw.githubusercontent.com/bashtoni/nagios-check-sip/${CHECK_SIP_VERSION}/check_sip > /usr/local/bin/check_sip && chmod +x /usr/local/bin/check_sip && \
+	curl -fL https://raw.githubusercontent.com/neszt/check-librenms-alerts/${CHECK_LIBRENMS_ALERTS_VERSION}/check_librenms_alerts.pl > /usr/local/bin/check_librenms_alerts.pl && chmod +x /usr/local/bin/check_librenms_alerts.pl && \
+	curl -fL https://raw.githubusercontent.com/StewLG/check_truenas_extended_play/${CHECK_TRUENAS_EXTENDED_PLAY_VERSION}/check_truenas_extended_play.py > /usr/local/bin/check_truenas_extended_play.py && chmod +x /usr/local/bin/check_truenas_extended_play.py && \
+	curl -fL https://raw.githubusercontent.com/bashtoni/nagios-check-sip/${CHECK_SIP_VERSION}/check_sip > /usr/local/bin/check_sip && chmod +x /usr/local/bin/check_sip && \
 	sed -i '2i\# nagios: -epn' /usr/local/bin/check_sip && \
 	sed -i 's|/usr/lib64/nagios/plugins|/usr/lib/nagios/plugins|g' /usr/local/bin/check_sip && \
 	# conf php-fpm to not clear env variables
