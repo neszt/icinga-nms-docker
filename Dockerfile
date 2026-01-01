@@ -4,7 +4,7 @@ LABEL maintainer="Neszt Tibor <tibor@neszt.hu>"
 LABEL org.opencontainers.image.source https://github.com/neszt/icinga-nms-docker
 
 ENV ACEJS=v1.43.5
-ENV CHECK_SSL_CERT_VERSION=v2.94.0
+ENV CHECK_SSL_CERT_VERSION=v2.95.0
 ENV CHECK_RBL_VERSION=v1.7.7
 ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
 ENV CHECK_IPMI_SENSOR_VERSION=v3.14
