@@ -1,0 +1,9 @@
+#!/bin/sh
+
+exec /usr/bin/prometheus \
+	--config.file=/etc/prometheus/prometheus.yml \
+	--storage.tsdb.path=/var/lib/prometheus \
+	--storage.tsdb.retention.time="${PROMETHEUS_RETENTION_TIME:-30d}" \
+	--web.external-url="${NMS_URL%/}/prometheus/" \
+	--web.route-prefix=/ \
+	--web.listen-address=127.0.0.1:9090

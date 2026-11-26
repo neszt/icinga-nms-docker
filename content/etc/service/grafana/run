@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -- \
+	--config=/etc/grafana/grafana.ini \
+	--homepath=/usr/share/grafana \
+	cfg:default.paths.data=/var/lib/grafana \
+	cfg:default.paths.logs=/var/log/grafana \
+	cfg:default.paths.plugins=/var/lib/grafana/plugins \
+	cfg:default.paths.provisioning=/etc/grafana/provisioning
+
+if [ -n "${NMS_URL}" ]; then
+	nms_host="${NMS_URL#*://}"
+	nms_host="${nms_host%%/*}"
+	set -- "$@" \
+		cfg:server.protocol=http \
+		"cfg:server.domain=${nms_host}" \
+		"cfg:server.root_url=${NMS_URL%/}/grafana/" \
+		cfg:server.serve_from_sub_path=true
+fi
+
+exec /usr/sbin/grafana-server "$@"

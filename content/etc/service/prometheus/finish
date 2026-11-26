@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "Prometheus service stopped at $(date)"

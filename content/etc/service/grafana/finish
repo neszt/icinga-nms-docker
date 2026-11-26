@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "Grafana service stopped at $(date)"

@@ -7,9 +7,13 @@ services:
     ports:
       - "$NMS_PORT:8080"
     environment:
+      - NMS_URL=$NMS_URL
       - ICINGA_EXTINFO=$ICINGA_EXTINFO
       - ICINGA_FORCE_PING4=$ICINGA_FORCE_PING4
       - SMOKEPING_URL=$SMOKEPING_URL
+      - MUNIN_URL=$MUNIN_URL
+      - PROMETHEUS_EXPORTER_PORT=${PROMETHEUS_EXPORTER_PORT:-9100}
+      - PROMETHEUS_RETENTION_TIME=${PROMETHEUS_RETENTION_TIME:-30d}
       - TIMEZONE=$TIMEZONE
       - GIT_CONFIG_STORE_SSH_URL=$GIT_CONFIG_STORE_SSH_URL
       - GIT_AUTOPULL_SCHEDULE=$GIT_AUTOPULL_SCHEDULE
@@ -28,3 +32,6 @@ services:
       - ./data/var/cache/icinga:/var/cache/icinga
       - ./data/var/lib/smokeping:/var/lib/smokeping
       - ./data/var/lib/munin:/var/lib/munin
+      - ./data/var/lib/prometheus:/var/lib/prometheus
+      - ./data/var/lib/grafana:/var/lib/grafana
+      - ./data/var/log/grafana:/var/log/grafana

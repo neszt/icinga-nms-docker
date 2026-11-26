@@ -17,6 +17,7 @@
     <service name="ssh" command="check_ssh" desc="ssh service" warnings="yes" active="yes" unknown="no"/>
     <service name="ntp" command="check_ntp_nrpe" warnings="no" active="yes" unknown="no"/>
     <service name="munin" command="check_munin" warnings="yes" check_period="workhours" active="yes" unknown="no"/>
+    <service name="node_exporter" command="check_prometheus" warnings="yes" active="yes" unknown="no"/>
   </hosttemplate>
   <hosttemplate id="dockerWeb">
     <service name="https" command="check_https" desc="web ssl service" warnings="yes" active="yes" unknown="no"/>

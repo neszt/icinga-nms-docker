@@ -76,6 +76,13 @@ for i in `find /etc/smokeping/config.d/ -type f | grep -v pathnames` ; do grep $
 
 ./nag2munin.pl > /etc/munin/munin-conf.d/nagios
 
+# Prometheus / Grafana
+#
+
+mkdir -p /etc/prometheus /etc/grafana/provisioning/datasources /etc/grafana/provisioning/dashboards/generated
+./nag2prometheus.pl > /etc/prometheus/prometheus.yml
+./nag2grafana.pl
+
 #
 # Radcli
 #
@@ -86,6 +93,10 @@ cp /config/radcli/* /etc/radcli/ 2>/dev/null || true
 # Restart services if runsvdir running
 #
 
-pidof runsvdir >/dev/null && (test -d /etc/service/smokeping && sv restart smokeping) && (test -d /etc/service/fcgi-smokeping && sv restart fcgi-smokeping) && (test -d /etc/service/icinga && sv restart icinga) && (test -d /etc/service/munin-node && sv restart munin-node)
+if pidof runsvdir >/dev/null; then
+	for service in smokeping fcgi-smokeping icinga munin-node prometheus grafana; do
+		test -d "/etc/service/$service" && sv restart "$service" || true
+	done
+fi
 
 /usr/local/bin/git.pl $IS_GIT_FORCE

@@ -73,6 +73,25 @@ if [ -z "${MUNIN_URL}" ]; then
 fi
 
 #
+# Prometheus / Grafana
+#
+
+echo "Setting up Prometheus and Grafana .."
+
+mkdir -p /var/lib/prometheus /var/lib/grafana /var/log/grafana
+chown -R prometheus:prometheus /var/lib/prometheus
+chown -R grafana:grafana /var/lib/grafana /var/log/grafana
+
+if [ -n "${NMS_URL}" ]; then
+    nms_host="${NMS_URL#*://}"
+    nms_host="${nms_host%%/*}"
+    export GF_SERVER_PROTOCOL=http
+    export GF_SERVER_DOMAIN="${nms_host}"
+    export GF_SERVER_ROOT_URL="${NMS_URL%/}/grafana/"
+    export GF_SERVER_SERVE_FROM_SUB_PATH=true
+fi
+
+#
 # Timezone
 #
 

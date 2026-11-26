@@ -10,12 +10,20 @@ ENV CHECK_LIBRENMS_ALERTS_VERSION=1.0.1
 ENV CHECK_IPMI_SENSOR_VERSION=v3.14
 ENV CHECK_TRUENAS_EXTENDED_PLAY_VERSION=ebae18bc20fbebd512294fbdbf3fb8b2b64794c9
 ENV CHECK_SIP_VERSION=aa441910e624260c047b7dce9cd09c01bc57980d
+ENV GRAFANA_DASHBOARD_URL=https://grafana.com/api/dashboards/24467/revisions/1/download
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
 	# buster needed for older icinga
 	echo deb http://archive.debian.org/debian buster main >> /etc/apt/sources.list && \
+	apt-get update && \
+	apt-get install -y --no-install-recommends ca-certificates curl gnupg && \
+	mkdir -p /etc/apt/keyrings && \
+	curl -fsSL https://apt.grafana.com/gpg.key | gpg --dearmor -o /etc/apt/keyrings/grafana.gpg && \
+	echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main" > /etc/apt/sources.list.d/grafana.list && \
 	apt-get update && apt-get -y dist-upgrade && \
-	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl libswitch-perl bc freeipmi-tools nagios-plugins-contrib sipsak && \
+	apt-get install -y --install-recommends vim telnet tcpdump less acl runit cron git nginx icinga nagios-nrpe-plugin curl smokeping munin prometheus grafana fcgiwrap spawn-fcgi php-fpm make xalan xsltproc python3 python3-urllib3 python3-requests libxml2-utils libxml-simple-perl libjson-xs-perl libnet-openssh-perl libdbi-perl libdbd-pg-perl libfrontier-rpc-perl liburi-encode-perl libdata-uuid-perl libcapture-tiny-perl libdata-validate-domain-perl libdata-validate-ip-perl libnet-dns-perl libnet-ip-perl libmonitoring-plugin-perl libcpanel-json-xs-perl libswitch-perl bc freeipmi-tools nagios-plugins-contrib sipsak && \
+	mkdir -p /usr/local/share/grafana/dashboards && \
+	curl -fL --retry 3 "${GRAFANA_DASHBOARD_URL}" -o /usr/local/share/grafana/dashboards/linux-servers.json && \
 	# ace.js min
 	curl -fL https://raw.githubusercontent.com/ajaxorg/ace-builds/refs/tags/${ACEJS}/src-min/ace.js > /var/www/html/ace.js && \
 	# nagios-plugins-contrib upgrades
