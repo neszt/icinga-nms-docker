@@ -38,6 +38,7 @@ $ ./start.sh
 
 ### Modify network hosts, services, topolgy
 * just edit nag.xml (on server side or at NMS\_URL)
+* hosts with an IP address in nag.xml are also added to the container's /etc/hosts
 
 ### Prometheus and Grafana
 

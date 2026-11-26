@@ -6,6 +6,10 @@ use XML::Simple;
 $XML::Simple::PREFERRED_PARSER = 'XML::Parser';
 
 my $map = {};
+my @etc_hosts;
+my $etc_hosts_path = '/etc/hosts';
+my $etc_hosts_start = '# BEGIN nagconf.pl managed hosts';
+my $etc_hosts_end = '# END nagconf.pl managed hosts';
 my $check_ping_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check_ping_4' : 'check_ping';
 my $check_host_alive_cmd = $ENV{ICINGA_FORCE_PING4} ? 'check-host-alive_4' : 'check-host-alive';
 
@@ -247,6 +251,9 @@ sub gen_hosts {#{{{
 		my $hostgroup = $e->{hostgroup} // $parent_hostgroup;
 		push(@{$map->{hostgroup_members}->{$hostgroup}}, $e->{id});
 		my $company = $e->{company} // $parent_company;
+		if ( defined($e->{ip}) && length($e->{ip}) ) {
+			push(@etc_hosts, { ip => $e->{ip}, name => $e->{id} });
+		}
 
 		put("define host{\n");
 		put(" use generic-host\n");
@@ -274,6 +281,33 @@ sub gen_hosts {#{{{
 		gen_httpservices($e->{'http-service'}, $e, $company);
 		gen_hosts($e->{host}, $e->{id}, $hostgroup, $company);
 	}
+}#}}}
+
+sub update_etc_hosts {#{{{
+	my $content;
+
+	open(my $input, '<', $etc_hosts_path) || die "can't open $etc_hosts_path: $!";
+	{
+		local $/;
+		$content = <$input>;
+	}
+	close($input) || die "can't close $etc_hosts_path: $!";
+	$content = '' unless defined($content);
+
+	$content =~ s/\Q$etc_hosts_start\E\n.*?\Q$etc_hosts_end\E\n?//s;
+
+	if (@etc_hosts) {
+		$content .= "\n" if length($content) && $content !~ /\n\z/;
+		$content .= "$etc_hosts_start\n";
+		foreach my $host (@etc_hosts) {
+			$content .= "$host->{ip}\t$host->{name}\n";
+		}
+		$content .= "$etc_hosts_end\n";
+	}
+
+	open(my $output, '>', $etc_hosts_path) || die "can't open $etc_hosts_path for writing: $!";
+	print {$output} $content || die "can't write $etc_hosts_path: $!";
+	close($output) || die "can't close $etc_hosts_path: $!";
 }#}}}
 
 sub gen_hostgroup {#{{{
@@ -314,6 +348,7 @@ sub main {#{{{
 	gen_generic($cfg);
 	gen_hosts($cfg->{host});
 	gen_hostgroup($cfg);
+	update_etc_hosts();
 
 	return 0;
 }#}}}
