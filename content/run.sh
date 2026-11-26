@@ -82,6 +82,22 @@ mkdir -p /var/lib/prometheus /var/lib/grafana /var/log/grafana
 chown -R prometheus:prometheus /var/lib/prometheus
 chown -R grafana:grafana /var/lib/grafana /var/log/grafana
 
+case "${PROMETHEUS_ENABLED-yes}" in
+    yes|true|1|on) ;;
+    *)
+        echo "PROMETHEUS_ENABLED is [${PROMETHEUS_ENABLED}]. Prometheus disabled."
+        rm -rf /etc/service/prometheus
+        ;;
+esac
+
+case "${GRAFANA_ENABLED-yes}" in
+    yes|true|1|on) ;;
+    *)
+        echo "GRAFANA_ENABLED is [${GRAFANA_ENABLED}]. Grafana disabled."
+        rm -rf /etc/service/grafana
+        ;;
+esac
+
 if [ -n "${NMS_URL}" ]; then
     nms_host="${NMS_URL#*://}"
     nms_host="${nms_host%%/*}"

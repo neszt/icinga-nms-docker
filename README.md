@@ -49,6 +49,8 @@ Add a service named `prometheus`, `node_exporter`, or `exporter` to a host or ho
 
 The container runs a local Prometheus instance, scrapes the matching `/metrics` endpoints every 15 seconds, and provisions one Grafana Prometheus datasource and Linux dashboard for every matching host. The default retention is 30 days and can be changed with `PROMETHEUS_RETENTION_TIME` using Prometheus duration units such as `30d` or `1y`. The dashboard is based on [Grafana dashboard 24467](https://grafana.com/api/dashboards/24467/revisions/1/download) and is downloaded during the image build.
 
+Prometheus and Grafana can be enabled independently with `PROMETHEUS_ENABLED` and `GRAFANA_ENABLED`. Both default to `yes`; set either value to `no` or leave it empty to remove that service from runit at container startup.
+
 Grafana is available at `${NMS_URL}/grafana/`. The internal Grafana upstream remains HTTP; the externally visible protocol and hostname are derived from `NMS_URL`, so an HTTPS `NMS_URL` must be used together with the TLS-terminating nginx proxy. nginx protects Grafana with the existing `htpasswd.users` Basic Auth file and forwards the authenticated username to Grafana's auth proxy. Grafana creates that user automatically with the Viewer role.
 
 Prometheus is available for authenticated manual queries at `${NMS_URL}/prometheus/`, for example `${NMS_URL}/prometheus/api/v1/query?query=up`. The endpoint is proxied to the local Prometheus listener and is protected by the same Basic Auth file.
